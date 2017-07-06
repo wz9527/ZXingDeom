@@ -15,7 +15,7 @@ import java.io.File;
 
 import push.app.com.zxingdeom.utils.QRCodeUtil;
 
-
+//hahaha
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +71,5 @@ public class MainActivity extends AppCompatActivity {
 
         return context.getFilesDir().getAbsolutePath();
     }
-    }
+}
 
