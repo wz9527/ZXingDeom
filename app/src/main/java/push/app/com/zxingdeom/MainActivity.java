@@ -18,58 +18,59 @@ import push.app.com.zxingdeom.utils.QRCodeUtil;
 //hahaha
 public class MainActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    protected void onCreate (Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
+        setContentView (R.layout.activity_main);
+///束带结发交电话费大家都好你翻翻
         //内容
-        final EditText contentET = (EditText) findViewById(R.id.create_qr_content);
+        final EditText contentET = (EditText) findViewById (R.id.create_qr_content);
         //显示二维码图片
-        final ImageView imageView = (ImageView) findViewById(R.id.create_qr_iv);
+        final ImageView imageView = (ImageView) findViewById (R.id.create_qr_iv);
         //是否添加Logo
-        final CheckBox addLogoCB = (CheckBox) findViewById(R.id.create_qr_addLogo);
-        Button createQrBtn = (Button) findViewById(R.id.create_qr_btn);
+        final CheckBox addLogoCB = (CheckBox) findViewById (R.id.create_qr_addLogo);
+        Button createQrBtn = (Button) findViewById (R.id.create_qr_btn);
 
-        createQrBtn.setOnClickListener(new View.OnClickListener() {
+        createQrBtn.setOnClickListener (new View.OnClickListener () {
 
             @Override
-            public void onClick(View v) {
-                final String filePath = getFileRoot(MainActivity.this) + File.separator
-                        + "qr_" + System.currentTimeMillis() + ".jpg";
+            public void onClick (View v) {
+                final String filePath = getFileRoot (MainActivity.this) + File.separator
+                        + "qr_" + System.currentTimeMillis () + ".jpg";
 
                 //二维码图片较大时，生成图片、保存文件的时间可能较长，因此放在新线程中
-                new Thread(new Runnable() {
+                new Thread (new Runnable () {
                     @Override
-                    public void run() {
-                        boolean success = QRCodeUtil.createQRImage(contentET.getText().toString().trim(), 800, 800,
-                                addLogoCB.isChecked() ? BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher) : null,
+                    public void run () {
+                        boolean success = QRCodeUtil.createQRImage (contentET.getText ().toString ().trim (), 800, 800,
+                                addLogoCB.isChecked () ? BitmapFactory.decodeResource (getResources (), R.mipmap.ic_launcher) : null,
                                 filePath);
 
                         if (success) {
-                            runOnUiThread(new Runnable() {
+                            runOnUiThread (new Runnable () {
                                 @Override
-                                public void run() {
-                                    imageView.setImageBitmap(BitmapFactory.decodeFile(filePath));
+                                public void run () {
+                                    imageView.setImageBitmap (BitmapFactory.decodeFile (filePath));
                                 }
                             });
                         }
                     }
-                }).start();
+                }).start ();
 
             }
         });
     }
 
     //文件存储根目录
-    private String getFileRoot(Context context) {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File external = context.getExternalFilesDir(null);
+    private String getFileRoot (Context context) {
+        if (Environment.getExternalStorageState ().equals (Environment.MEDIA_MOUNTED)) {
+            File external = context.getExternalFilesDir (null);
             if (external != null) {
-                return external.getAbsolutePath();
+                return external.getAbsolutePath ();
             }
         }
 
-        return context.getFilesDir().getAbsolutePath();
+        return context.getFilesDir ().getAbsolutePath ();
     }
+
 }
 
